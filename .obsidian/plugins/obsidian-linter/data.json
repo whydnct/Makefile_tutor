@@ -1,0 +1,136 @@
+{
+  "ruleConfigs": {
+    "escape-yaml-special-characters": {
+      "enabled": false,
+      "try-to-escape-single-line-arrays": false
+    },
+    "format-tags-in-yaml": {
+      "enabled": false
+    },
+    "insert-yaml-attributes": {
+      "enabled": false,
+      "text-to-insert": "aliases: \ntags: "
+    },
+    "yaml-timestamp": {
+      "enabled": false,
+      "date-created": false,
+      "date-created-key": "date created",
+      "force-retention-of-create-value": false,
+      "date-modified": false,
+      "date-modified-key": "date modified",
+      "format": "dddd, MMMM Do YYYY, h:mm:ss a"
+    },
+    "yaml-title": {
+      "enabled": false,
+      "title-key": "title"
+    },
+    "capitalize-headings": {
+      "enabled": true,
+      "style": "First letter",
+      "ignore-case-words": true,
+      "ignore-words": "macOS, iOS, iPhone, iPad, JavaScript, TypeScript, AppleScript",
+      "lowercase-words": "via, a, an, the, and, or, but, for, nor, so, yet, at, by, in, of, on, to, up, as, is, if, it, for, to, with, without, into, onto, per, de, con, para,"
+    },
+    "file-name-heading": {
+      "enabled": false
+    },
+    "header-increment": {
+      "enabled": false,
+      "start-at-h2": false
+    },
+    "footnote-after-punctuation": {
+      "enabled": false
+    },
+    "move-footnotes-to-the-bottom": {
+      "enabled": false
+    },
+    "re-index-footnotes": {
+      "enabled": false
+    },
+    "convert-bullet-list-markers": {
+      "enabled": true
+    },
+    "emphasis-style": {
+      "enabled": false,
+      "style": "consistent"
+    },
+    "no-bare-urls": {
+      "enabled": false
+    },
+    "proper-ellipsis": {
+      "enabled": true
+    },
+    "remove-consecutive-list-markers": {
+      "enabled": false
+    },
+    "remove-empty-list-markers": {
+      "enabled": true
+    },
+    "remove-hyphenated-line-breaks": {
+      "enabled": true
+    },
+    "remove-multiple-spaces": {
+      "enabled": true
+    },
+    "strong-style": {
+      "enabled": false,
+      "style": "consistent"
+    },
+    "two-spaces-between-lines-with-content": {
+      "enabled": false
+    },
+    "compact-yaml": {
+      "enabled": true,
+      "inner-new-lines": false
+    },
+    "consecutive-blank-lines": {
+      "enabled": true
+    },
+    "convert-spaces-to-tabs": {
+      "enabled": false,
+      "tabsize": "4"
+    },
+    "heading-blank-lines": {
+      "enabled": true,
+      "bottom": true,
+      "empty-line-after-yaml": true
+    },
+    "line-break-at-document-end": {
+      "enabled": false
+    },
+    "paragraph-blank-lines": {
+      "enabled": true
+    },
+    "remove-empty-lines-between-list-markers-and-checklists": {
+      "enabled": false
+    },
+    "remove-link-spacing": {
+      "enabled": false
+    },
+    "space-after-list-markers": {
+      "enabled": true
+    },
+    "space-between-chinese-japanese-or-korean-and-english-or-numbers": {
+      "enabled": false
+    },
+    "trailing-spaces": {
+      "enabled": true,
+      "twp-space-line-break": false
+    }
+  },
+  "lintOnSave": false,
+  "recordLintOnSaveLogs": false,
+  "displayChanged": true,
+  "settingsConvertedToConfigKeyValues": true,
+  "foldersToIgnore": [],
+  "linterLocale": "system-default",
+  "logLevel": 4,
+  "lintCommands": [],
+  "customRegexes": [],
+  "commonStyles": {
+    "aliasArrayStyle": "single-line",
+    "tagArrayStyle": "single-line",
+    "minimumNumberOfDollarSignsToBeAMathBlock": 2,
+    "escapeCharacter": "\""
+  }
+}

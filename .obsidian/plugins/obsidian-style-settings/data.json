@@ -1,0 +1,15 @@
+{
+  "obsidian-indentation-guides@@indentation-guide-active-color@@dark": "#FFFFFF91",
+  "minimal-style@@checkbox-shape": "checkbox-square",
+  "minimal-style@@minimal-strike-lists": true,
+  "minimal-style@@active-line-on": true,
+  "minimal-style@@embed-strict": true,
+  "minimal-style@@h4-variant": "normal",
+  "minimal-style@@h5-variant": "normal",
+  "minimal-style@@h6-variant": "normal",
+  "minimal-style@@h6-l": true,
+  "minimal-style@@h5-l": false,
+  "minimal-style@@h4-l": false,
+  "minimal-style@@tag-border-width": "1px",
+  "minimal-style@@tag-color@@dark": "#FF7F50"
+}

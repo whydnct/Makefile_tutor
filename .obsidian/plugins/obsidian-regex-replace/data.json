@@ -1,0 +1,10 @@
+{
+  "findText": "^([a-z])",
+  "replaceText": "|\\1",
+  "useRegEx": true,
+  "selOnly": false,
+  "caseInsensitive": false,
+  "processLineBreak": true,
+  "processTab": false,
+  "prefillFind": false
+}

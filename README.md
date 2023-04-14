@@ -20,14 +20,9 @@
 
 # Summary
 
-Addressed to beginners and not to newcomers, the idea behind this tutorial is to
-**focus on the essential**.  Anything that is not directly related to the
-template we are going to explore will not be covered here.  On the other hand
-everything that is covered in this tutorial will be carefully detailed.
+Addressed to beginners and not to newcomers, the idea behind this tutorial is to **focus on the essential**.  Anything that is not directly related to the template we are going to explore will not be covered here.  On the other hand everything that is covered in this tutorial will be carefully detailed.
 
-Initially intended to help 42 students to step up their Makefile skills through
-**a C destined documented template** that evolves gradually, **version by
-version**.  With the aim of making them more digestible and even tasty  🍔
+Initially intended to help 42 students to step up their Makefile skills through **a C destined documented template** that evolves gradually, **version by version**.  With the aim of making them more digestible and even tasty  🍔
 
 Count **1 hour** to complete this tutorial plus some time to play with the [**examples**](https://github.com/clemedon/Makefile_tutor/tree/main/projects). For those of you who are wondering, as I write this line I invested a total of 102 hours and 20 minutes in the making of this tutorial.
 
@@ -74,11 +69,7 @@ cd <template_version>
 make <target>
 ```
 
-*PS1 **`C++` users** have to replace `CC = clang` with `CXX = g++` and `CFLAGS`
-with `CXXFLAGS`.*
-
-*PS2 do not hesitate to **fork me** so as to remove everything that does not
-interest you and customize me according to your needs.*
+PS1 **`C++` users** have to replace `CC = clang` with `CXX = g++` and `CFLAGS` with `CXXFLAGS`.
 
 # Glossary
 
@@ -100,12 +91,9 @@ Our **template** will be articulated around the following **parts**:
 
 According to make a **`rule`** is made of:
 
-- `targets` are the names of the **goals** we want to make. It can be a file or
-  an action, the latter leading to a *pseudo target*.
-- `prerequisites` are the goals that must be achieved so that the `rule` can
-  execute.  Thus prerequisites are the **targets dependencies**.
-- `recipe` is the set of lines that **begins with a `TAB`** character and appear
-  in a rule context.
+- `targets` are the names of the **goals** we want to make. It can be a file or an action, the latter leading to a *pseudo target*.
+- `prerequisites` are the goals that must be achieved so that the `rule` can execute.  Thus prerequisites are the **targets dependencies**.
+- `recipe` is the set of lines that **begins with a `TAB`** character and appear in a rule context.
 
 ```make
 target: prerequisite
@@ -116,11 +104,7 @@ target: prerequisite
 
 # Syntax
 
-Like every Makefile the template uses a combination of Makefile syntax and shell
-script syntax.  The **shell script syntax** is reserved and limited to recipe
-lines, by default those lines have to **start with a `TAB`** character to be
-differentiated by make (and passed to the shell).  The **Makefile syntax** is
-used for **all the other lines**.
+Like every Makefile the template uses a combination of Makefile syntax and shell script syntax.  The **shell script syntax** is reserved and limited to recipe lines, by default those lines have to **start with a `TAB`** character to be differentiated by make (and passed to the shell).  The **Makefile syntax** is used for **all the other lines**.
 
 About the **equal signs**:
 
@@ -479,7 +463,7 @@ CPPFLAGS    := -I .
   it allows you to no longer have to write the full path of a header but only
   its file name in the sources: `#include "icecream.h"` instead of `#include
   "../../path/to/include/icecream.h"`.
-
+---
 ```make
 #------------------------------------------------#
 #   UTENSILS                                     #
@@ -523,21 +507,15 @@ re:
 
 - The `info` function is used here to **print a custom message** about what has
   just been built.
+  
+  >*We prefer `info` to shell `echo` because it is a make function.  Also unlike `echo` that can only be used inside a recipe, `info` can be used anywhere in a Makefile which makes it powerful for debugging.*
 
-*We prefer `info` to shell `echo` because it is a make function.  Also unlike
-`echo` that can only be used inside a recipe, `info` can be used anywhere in a
-Makefile which makes it powerful for debugging.*
-
-<sub><sub><hr></sub></sub>
-
-- The **C compilation implicit rule is overwritten** with an explicit equivalent
-  which let us add an `info` statement to it.
-
-<sub><sub><hr></sub></sub>
+- The **C compilation implicit rule is overwritten** with an explicit equivalent which let us add an `info` statement to it.
 
 - The order in which the rules are written does not matter as long as our
   **default goal `all` appears first** (the rule that will be triggered by a
   simple `make` command).
+---
 
 ```make
 #------------------------------------------------#
@@ -548,13 +526,9 @@ Makefile which makes it powerful for debugging.*
 .SILENT:
 ```
 
-- Normally make prints each line of a rule's recipe before it is executed.  The
-  special target **`.SILENT:` silences the rules output** specified as
-  prerequisites, when it is used without prerequisites it silents all the rules
-  (implicit included).
+- Normally make prints each line of a rule's recipe before it is executed.  The special target **`.SILENT:` silences the rules output** specified as prerequisites, when it is used without prerequisites it silents all the rules (implicit included).
 
-*To silence at the recipe-line level we can prefix the wanted recipe lines with an `@`
-symbol.*
+  >*To silence at the recipe-line level we can prefix the wanted recipe lines with an `@` symbol.*
 
 ```make
 ####################################### END_2 ####
@@ -562,12 +536,11 @@ symbol.*
 
 [**Return to Index ↑**](#index)
 
-##  Version 3
+##  Version 3 - any kind of dir structure
 
 ###     v3 Structure
 
-As above but a more complex project structure with **multiple source
-directories** and their **corresponding object directories**:
+As above but a more complex project structure with **multiple source directories** and their **corresponding object directories**:
 
 ```
     before build:          after build:
@@ -633,17 +606,11 @@ CFLAGS      := -Wall -Wextra -Werror
 CPPFLAGS    := -I include
 ```
 
-- We can **split the line** by ending it **with a `backslash`** to increase the
-  readability of `SRCS` content and facilitate its modification.
+- We can **split the line** by ending it **with a `backslash`** to increase the readability of `SRCS` content and facilitate its modification.
 
-<sub><sub><hr></sub></sub>
+- A string **substitution reference** substitutes the value of each item of a variable with the specified alterations.  `$(SRCS:%=$(SRC_DIR)/%)` means that each item of `SRCS` represented by `%` becomes itself (`%`) plus the `$(SRC_DIR)/` alteration, so `main.c` becomes `src/main.c`. `OBJS` will then use the same process to convert `src/main.c` into `src/main.o`, dedicated to the `OBJ_DIR`.
 
-- A string **substitution reference** substitutes the value of each item of a
-  variable with the specified alterations.  `$(SRCS:%=$(SRC_DIR)/%)` means that
-  each item of `SRCS` represented by `%` becomes itself (`%`) plus the
-  `$(SRC_DIR)/` alteration, so `main.c` becomes `src/main.c`. `OBJS` will then
-  use the same process to convert `src/main.c` into `src/main.o`, dedicated to
-  the `OBJ_DIR`.
+---
 
 ```make
 #------------------------------------------------#
@@ -658,12 +625,10 @@ MAKEFLAGS   += --no-print-directory
 DIR_DUP     = mkdir -p $(@D)
 ```
 
-- `DIR_DUP` will **generate the `OBJ_DIR` based on `SRC_DIR`** structure with
-  `mkdir -p` which creates the directory and the parents directories if missing,
-  and `$(@D)` that we have seen in [syntax](#syntax) section.
-
-*This will work with every possible kind of src directory structure.*
-
+- `DIR_DUP` will **generate the `OBJ_DIR` based on `SRC_DIR`** structure
+- with `mkdir -p` which creates the directory and the parents directories if missing, and `$(@D)` that we have seen in [syntax](#syntax) section.
+	- This will work with every possible kind of src directory structure.
+---
 ```make
 #------------------------------------------------#
 #   RECIPES                                      #
@@ -698,7 +663,7 @@ re:
 ```
 
 - The **compilation rule** `.o: %.c` becomes `$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c`
-  since our structure **uses dedicated source and object directories**.
+	- cause our structure **uses dedicated source and object directories**.
 
 ```make
 #------------------------------------------------#
@@ -713,13 +678,11 @@ re:
 
 [**Return to Index ↑**](#index)
 
-##  Version 4
+##  Version 4 - static library
 
 ###     v4 Structure
 
-Builds a **library** so there are no `main.c`.  We generate **dependencies**
-that are stored with the objects therefor we rename the `obj` directory into a
-more general `.build` directory.
+Builds a **library** so there are no `main.c`.  We generate **dependencies** that are stored with the objects therefor we rename the `obj` directory into a more general `.build` directory.
 
 ```
     before build:          after build:
@@ -793,10 +756,8 @@ AR          := ar
 ARFLAGS     := -r -c -s
 ```
 
-- Unlike with sources, **when a header file is modified** make has no way of
-  knowing this and will not consider **the executable** to be out of date, and
-  therefor **will** not **rebuild** it.  In order to change this behavior we
-  should add the appropriate header files as additional prerequisites:
+- Unlike with sources, make doesn't notice **when a header file is modified** → won't consider **the executable** to be out of date → **will** not **rebuild** it.
+	- to change this → add the header files as additional prerequisites:
 
 ```make
 #before                     #after
@@ -804,15 +765,11 @@ main.o: main.c              main.o: main.c icecream.h
     clang -c $< -o $@           clang -c $< -o $@
 ```
 
-- Doing this manually for multiple sources and headers is both tedious and error
-  prone.  By adding `-MMD` to `CPPFLAGS` our compiler will **automatically
-  generate a list of dependencies** for each object file encountered during the
-  compilation.  The `-MP` option prevents errors that are triggered if a header
-  file has been deleted or renamed.
+- Doing this manually for multiple sources and headers is both tedious and error prone.
+	- `-MMD` in `CPPFLAGS` → the compiler will **automatically generate a list of dependencies** for each object file encountered during the compilation.
+	- The `-MP` option prevents errors that are triggered if a header file has been deleted or renamed.
 
-  Dependency files must be included into our Makefile right after the objects
-  creation so to obtain their names we copy `OBJS` into `DEPS` and use
-  *substitution reference* to turn `.o` part of their name into `.d`.
+  Dependency files must be included into our Makefile right after the objects creation → to obtain their names we copy `OBJS` into `DEPS` and use *substitution reference* to turn `.o` part of their name into `.d`.
 
 <sub><sub><hr></sub></sub>
 
@@ -900,7 +857,7 @@ re:
 
 [**Return to Index ↑**](#index)
 
-##  Version 5
+##  Version 5 - Use of libraries
 
 ###     v5 Structure
 

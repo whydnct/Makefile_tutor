@@ -1,0 +1,10 @@
+{
+  "baseFontSize": 12,
+  "cssTheme": "Minimal",
+  "enabledCssSnippets": [
+    "styles",
+    "custom-icons-files-folders"
+  ],
+  "theme": "obsidian",
+  "accentColor": ""
+}

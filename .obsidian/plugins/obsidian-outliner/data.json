@@ -1,0 +1,13 @@
+{
+  "styleLists": false,
+  "debug": false,
+  "stickCursor": false,
+  "betterEnter": true,
+  "betterTab": false,
+  "selectAll": true,
+  "listLines": false,
+  "listLineAction": "toggle-folding",
+  "disableZoomNotification": true,
+  "hideWarning": false,
+  "zoomOnClick": true
+}

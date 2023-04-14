@@ -1,0 +1,21 @@
+{
+  "files": [
+    "Task Template.md",
+    "wbs_task.md"
+  ],
+  "templaterFiles": [],
+  "newFileTemplates": [
+    {
+      "folder": "tasks",
+      "path": "Task Template.md",
+      "plugin": "core"
+    },
+    {
+      "folder": "00_obras/5317024/Alcance/WBS",
+      "path": "wbs_task.md",
+      "plugin": "core"
+    }
+  ],
+  "openNewFileTemplateInNewPane": true,
+  "useNewFileTemplateOnFileCreation": false
+}

@@ -1,0 +1,13 @@
+/*
+    tables-auto-left.css snippet
+
+    Adjust tables for auto-width columns & not using full width.
+
+    2021-06-07 Matthias C. Hormann (Moonbase59)
+*/
+
+table {
+  table-layout: auto !important;
+  width: unset !important;
+  max-width: 100%;
+}

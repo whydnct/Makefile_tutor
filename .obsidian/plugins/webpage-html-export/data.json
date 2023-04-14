@@ -1,0 +1,12 @@
+{
+  "inlineCSS": true,
+  "inlineJS": true,
+  "inlineImages": true,
+  "makeNamesWebStyle": true,
+  "includePluginCSS": "dataview\nobsidian-outliner\nobsidian-tasks-plugin\ntable-editor-obsidian\nobsidian-minimal-settings\nobsidian-style-settings",
+  "addDarkModeToggle": true,
+  "includeOutline": true,
+  "customLineWidth": 0,
+  "openAfterExport": true,
+  "lastExportPath": "/home/al/excel-olatz.html"
+}

@@ -1,0 +1,161 @@
+{
+  "main": {
+    "id": "ee7527f458bc8dd8",
+    "type": "split",
+    "children": [
+      {
+        "id": "68b207a057b133ac",
+        "type": "leaf",
+        "state": {
+          "type": "markdown",
+          "state": {
+            "file": "trabajo-vacaciones.md",
+            "mode": "source",
+            "backlinks": true,
+            "source": false
+          }
+        }
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "c196f2a4af17cbc0",
+    "type": "split",
+    "children": [
+      {
+        "id": "0844ca509b22de0d",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "83088faa5dc6e640",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {}
+            }
+          },
+          {
+            "id": "0cd5339508f114e0",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              }
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "f866a1ad392c2218",
+    "type": "split",
+    "children": [
+      {
+        "id": "141138af5410f13f",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "f25368532c54fb6e",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {}
+            }
+          },
+          {
+            "id": "7a8871013fbed31e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "trabajo-vacaciones.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "98ecbc2e882b623d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "trabajo-vacaciones.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              }
+            }
+          },
+          {
+            "id": "7d1e1a53d020994d",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              }
+            }
+          },
+          {
+            "id": "9e81b5e060c67eaf",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "trabajo-vacaciones.md"
+              }
+            }
+          },
+          {
+            "id": "28da06f65bb94070",
+            "type": "leaf",
+            "state": {
+              "type": "BC-matrix",
+              "state": {}
+            }
+          },
+          {
+            "id": "a813e9d7159a5ae4",
+            "type": "leaf",
+            "state": {
+              "type": "BC-tree",
+              "state": {}
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "active": "68b207a057b133ac",
+  "lastOpenFiles": [
+    "vacaciones.md",
+    "Tasks.md",
+    "trabajo-vacaciones.md",
+    "00_obras/5312012/5312012.md",
+    "Inbox.md",
+    "00_obras/5314124/5314214.md",
+    "00_obras/5312012/contrataciones-5312012.md",
+    "00_obras/5312012/proyecto-5312012.md",
+    "00_obras/5312012/guía-ejecución.md",
+    "00_obras/5312012/suministro-áridos.md"
+  ]
+}
