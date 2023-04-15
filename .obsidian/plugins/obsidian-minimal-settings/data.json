@@ -3,7 +3,7 @@
   "lightStyle": "minimal-light",
   "darkStyle": "minimal-dark",
   "lightScheme": "minimal-default-light",
-  "darkScheme": "minimal-atom-dark",
+  "darkScheme": "minimal-catppuccin-dark",
   "editorFont": "calibri,-apple-system,BlinkMacSystemFont,\"Segoe UI Emoji\",\"Segoe UI\",Roboto,Oxygen-Sans,Ubuntu,Cantarell,sans-serif",
   "lineHeight": 1.5,
   "lineWidth": 40,

@@ -20,9 +20,7 @@
 
 # Summary
 
-Addressed to beginners and not to newcomers, the idea behind this tutorial is to **focus on the essential**.  Anything that is not directly related to the template we are going to explore will not be covered here.  On the other hand everything that is covered in this tutorial will be carefully detailed.
-
-Initially intended to help 42 students to step up their Makefile skills through **a C destined documented template** that evolves gradually, **version by version**.  With the aim of making them more digestible and even tasty  🍔
+Initially intended to help 42 students to step up their Makefile skills through **a C destined documented template** that evolves gradually, **version by version**. With the aim of making them more digestible and even tasty 🍔
 
 Count **1 hour** to complete this tutorial plus some time to play with the [**examples**](https://github.com/clemedon/Makefile_tutor/tree/main/projects). For those of you who are wondering, as I write this line I invested a total of 102 hours and 20 minutes in the making of this tutorial.
 
@@ -55,9 +53,7 @@ Then it can be quickly navigated thanks to the:
 - **Text in bold** that compile the essence of this tutorial.
 - [**Return to Index ↑**](#index) buttons at the end of each version.
 
-Each version of the template has an assigned directory in the
-[**projects**](https://github.com/clemedon/Makefile_tutor/tree/main/projects)
-directory of the repository, to play with a Makefile open a terminal and run:
+Each version of the template has an assigned directory in the [**projects**](https://github.com/clemedon/Makefile_tutor/tree/main/projects) directory of the repository, to play with a Makefile open a terminal and run:
 
 ```bash
 git clone https://github.com/clemedon/Makefile_tutor.git
@@ -69,7 +65,7 @@ cd <template_version>
 make <target>
 ```
 
-PS1 **`C++` users** have to replace `CC = clang` with `CXX = g++` and `CFLAGS` with `CXXFLAGS`.
+**`C++` users** have to replace `CC = clang` with `CXX = g++` and `CFLAGS` with `CXXFLAGS`.
 
 # Glossary
 
@@ -82,17 +78,20 @@ Each **version** the template has **3 sections**:
 
 Our **template** will be articulated around the following **parts**:
 
-- `### BEG`         Mark the template **beginning**.
-- `INGREDIENTS`     Build **variables**.
-- `UTENSILS`        Shell **commands**.
-- `RECIPES`         Build and extra **rules**.
-- `SPEC`            **Special targets**.
-- `#### END`        Mark the template **end**.
+- `### BEG` Mark the template **beginning**.
+- `INGREDIENTS` Build **variables**.
+- `UTENSILS` Shell **commands**.
+- `RECIPES` Build and extra **rules**.
+- `SPEC` **Special targets**.
+- `#### END` Mark the template **end**.
 
 According to make a **`rule`** is made of:
 
-- `targets` are the names of the **goals** we want to make. It can be a file or an action, the latter leading to a *pseudo target*.
-- `prerequisites` are the goals that must be achieved so that the `rule` can execute.  Thus prerequisites are the **targets dependencies**.
+- `targets` are the names of the **goals** we want to make.
+	- It can be a file or an action,
+		- the latter leading to a *pseudo target*.
+- `prerequisites` are the goals that must be achieved so that the `rule` can execute.
+	- so, the **targets dependencies**.
 - `recipe` is the set of lines that **begins with a `TAB`** character and appear in a rule context.
 
 ```make
@@ -104,13 +103,17 @@ target: prerequisite
 
 # Syntax
 
-Like every Makefile the template uses a combination of Makefile syntax and shell script syntax.  The **shell script syntax** is reserved and limited to recipe lines, by default those lines have to **start with a `TAB`** character to be differentiated by make (and passed to the shell).  The **Makefile syntax** is used for **all the other lines**.
+The template uses a combination of Makefile syntax and shell script syntax.
+
+- **shell script syntax**
+	- only on recipe lines,
+	- by default those lines have to **start with a `TAB`** character to be differentiated by make (and passed to the shell).
+- **Makefile syntax** is used for **all the other lines**.
 
 About the **equal signs**:
 
-- `:=` **simply expand** the defined variable (like C `=`).
-- `=` **recursively expand** the defined variable (the expression is expanded
-  afterward, when (and each time) the variable is used).
+- := **simply expand** the defined variable (like C =).
+- = **recursively expand** the defined variable (the expression is expanded afterward, when (and each time) the variable is used).
 
 ```make
 A := Did $(C)
@@ -123,9 +126,11 @@ all:
     $(info $(B)) # output "Did you understand ?"
 ```
 
-About **variables** note that `${VAR}` and `$(VAR)` is exactly the same.
+About **variables**
 
-**Automatic Variables** expansion:
+- `${VAR}` and `$(VAR)` is exactly the same.
+
+## Automatic Variables expansion
 
 - `$<` **leftmost prerequisite**
 - `$@` **current target**
@@ -193,11 +198,9 @@ About **variables** note that `${VAR}` and `$(VAR)` is exactly the same.
 > - print the value of an arbitrary variable
 > - update the git repository
 
-##  Version 1
+## Version 1 - Simplest C project
 
-###     v1 Structure
-
-The simplest, build a program called `icecream` with the following structure:
+### V1 Structure
 
 ```
     before build:    after build:
@@ -208,7 +211,7 @@ The simplest, build a program called `icecream` with the following structure:
                      └── icecream
 ```
 
-###     v1 Brief
+### V1 Brief
 
 - 42 C coding style conventions
 - builtin variables
@@ -220,7 +223,7 @@ The simplest, build a program called `icecream` with the following structure:
 - parallelization enabled by `make --jobs`
 - the `.PHONY:` special target
 
-###     v1 Template
+### V1 Template
 
 ```make
 ####################################### BEG_1 ####
@@ -284,25 +287,21 @@ re:
 ####################################### END_1 ####
 ```
 
-- The choice of the `CC` and `CFLAGS` values, `NAME`, `clean`, `fclean`, `all`
-  and `re` as the basic rules as well as not using a wildcard to auto generate
-  the sources list is guided by the **42 C coding style conventions**, do not
-  hesitate to disagree and change it (like renaming `clean` and `fclean` to the
-  more GNU conventional `mostlyclean` and `clean` respectively).
+- the 42 C coding style conventions dictate:
+	- The choice of the `CC` and `CFLAGS` values,
+	- `NAME`, `clean`, `fclean`, `all` and `re` as the basic rules
+	- not using a wildcard to auto generate the sources list
+	- do not hesitate to disagree and change it (like renaming `clean` and `fclean` to the more GNU conventional `mostlyclean` and `clean` respectively). 
 
-<sub><sub><hr></sub></sub>
-
-- `MAKE` and `MAKEFLAGS` are **builtin variables** like `CFLAGS` and a lot of
-  others that you can find in the *data-base* (`make --print-data-base`
-  command). `MAKE` value corresponds to the `make` executable being run and
-  `MAKEFLAGS` to its flags.  When a Makefile is executed from another Makefile,
-  the called's `MAKE` `MAKEFLAGS` variables inherit from the caller's `MAKE`
-  `MAKEFLAGS` values.
-
-Here we append `--no-print-directory` to `MAKEFLAGS` content to have a clearer
-output, try to remove it and `make re` to see the difference.
-
-<sub><sub><hr></sub></sub>
+- **builtin variables**
+	- you can find them all with `make --print-data-base` command.
+	 - the implicit rules can be found with `make -p -f/dev/null | less`.
+	- `MAKE` and `MAKEFLAGS` are **builtin variables** like `CFLAGS` 
+	- `MAKE` value corresponds to the `make` executable being run
+	- `MAKEFLAGS` to its flags.
+		- When a Makefile is executed from another Makefile, `MAKEFLAGS` variables are inherited from the caller's.
+		- `--no-print-directory` to `MAKEFLAGS` content to have a clearer output,
+			- try to remove it and `make re` to see the difference.
 
 - **The C compilation implicit rule** looks like this:
 
@@ -311,52 +310,14 @@ output, try to remove it and `make re` to see the difference.
     $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 ```
 
-Where `%.o` expands to each objects, `%.c` to each sources, `$@` to the first
-target (which is `%.o`) and `$<` to the leftmost prerequisite (which is `%.c`).
-
-*As their name implies implicit rules are implicit and do not need to be
-written.  As well as the builtin variables, all the implicit rules can be found
-in the data-base, accessible with `make -p -f/dev/null | less` command.*
-
-<sub><sub><hr></sub></sub>
-
-- A **pattern rule** is a rule whose target **contains** a **`%` character**
-  (here `%.o: %.c`).  This character means "exactly one of them".  It is used
-  here to say that each `.o` requires a `.c` with the same name and the `$(CC)…`
-  recipe line will execute as many times as there are `.o: .c` pairs, thus
-  creating for each source its corresponding object, one at a time.
-
-<sub><sub><hr></sub></sub>
-
-- **Automatic variables in practice**:
-
-```make
-# Linking step
-
-$(NAME): $(OBJS)
-    $(CC) $^ -o $@
-```
-
-`$@` expands to the *current target*, here we could have used `$(NAME)` instead.
-
-`$^` expands to *all prerequisites*, here we could have used `$(OBJS)` instead
-but not `$<` that expands to the *leftmost prerequisite* and so only the first
-item found in `$(OBJS)`.
-
-```make
-# Compiling step
-
-%.o: %.c
-    $(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
-```
-
-`$<` expands to the *leftmost prerequisite*, here it could not have been
-replaced with `$(SRCS)` because `$(SRCS)` expands to all the sources at once
-which is not the case of the pattern rule `%.c`.  On the other hand here `$<` is
-equivalent to `$^`, both will always expand to one source: the current one
-expanded by `%.c`.  For the same reasons `$@` expands to `%.o` not to `$(OBJS)`.
-
-<sub><sub><hr></sub></sub>
+- `%.o` expands to each objects, `%.c` to each sources, `$@` to the first  target (which is `%.o`) and `$<` to the leftmost prerequisite (which is `%.c`).
+- A **pattern rule** is a rule whose target **contains** a **`%` character**.
+	- `%` means "exactly one of them".
+		- each `.o` requires a `.c` with the same name
+		- `$(CC)[…]` recipe line will execute as many times as there are `.o: .c` pairs,
+		- creating a `.o` for every `.c` , one at a time. 
+  - `-c`  → only compile without linking
+  - `-o` → specify objects name
 
 - **Illustration of a `make all`**:
 
@@ -370,49 +331,21 @@ $(NAME): $(OBJS)                        2 ← 1
     $(CC) $(CFLAGS) -c -o $@ $<
 ```
 
-The `all` target requires `icecream` that requires the `objects` that require the
-`sources` that requires…  a programmer.  In other words `all` creates `icecream`
-with the objects created with the sources that you have created.
+- **C build recap** `%.o` target requires the sources to be compiled into objects, the `-c` option tells the compiler to only compile without linking. The `-o` option is used to specify the objects name. Afterward the `$(NAME)` target requires the linking the objects into a binary file whose name is specified with the `-o` flag. 
 
-Make will first trace its path to the lower level where it finds a raw material
-`3 → 2 → 1 → 0` (the `sources`) and then do it backward while building each
-resource that is required by the direct upper level encountered `0 → 1 → 2 → 3`
-(the `icecream`, our *final goal*).
+- For the `re` rule we have no choice but make an external call to our Makefile because we should not rely on the order in which prerequisites are specified. For example `re: fclean all` wouldn't not be reliable if **parallelization** was **enabled by `make --jobs`**.
 
-<sub><sub><hr></sub></sub>
+- The prerequisites given to **the `.PHONY:` special target** become targets that make will run regardless of whether a file with that name exists. In short these prerequisites are our targets that don't bear the name of a file.
 
-- **C build recap** `%.o` target requires the sources to be compiled into
-  objects, the `-c` option tells the compiler to only compile without linking.
-  The `-o` option is used to specify the objects name.  Afterward the `$(NAME)`
-  target requires the linking the objects into a binary file whose name is
-  specified with the `-o` flag.
-
-<sub><sub><hr></sub></sub>
-
-- For the `re` rule we have no choice but make an external call to our Makefile
-  because we should not rely on the order in which prerequisites are specified.
-  For example `re: fclean all` wouldn't not be reliable if **parallelization**
-  was **enabled by `make --jobs`**.
-
-<sub><sub><hr></sub></sub>
-
-- The prerequisites given to **the `.PHONY:` special target** become targets
-  that make will run regardless of whether a file with that name exists.  In
-  short these prerequisites are our targets that don't bear the name of a file.
-
-Try to remove the `.PHONY: re`, create a file named `re` at the Makefile level
-in the project directory and run `make re`.  It won't work.
-
-Now if you do the same with `all` it won't cause any problem, as we know
-prerequisites are completed before their targets and `all` has the sole action
-of invoking `$(NAME)`, as long as a rule doesn't have a recipe, `.PHONY` is not
-necessary.
+Try to remove the `.PHONY: re`, create a file named `re` at the Makefile level  in the project directory and run `make re`. It won't work.  Now if you do the same with `all` it won't cause any problem, as we know  prerequisites are completed before their targets and `all` has the sole action  of invoking `$(NAME)`, as long as a rule doesn't have a recipe, `.PHONY` is not  necessary.
 
 [**Return to Index ↑**](#index)
 
-##  Version 2
+---
 
-###     v2 Structure
+## Version 2
+
+### V2 Structure
 
 As above but for a project that **includes header files**:
 
@@ -426,7 +359,7 @@ As above but for a project that **includes header files**:
                       └── icecream
 ```
 
-###     v2 Brief
+### V2 Brief
 
 - preprocessor's flags
 - print a custom message
@@ -434,7 +367,7 @@ As above but for a project that **includes header files**:
 - *default goal* `all` appears first
 - `.SILENT:` silences the rules output
 
-###     v2 Template
+### V2 Template
 
 ```make
 ####################################### BEG_2 ####
@@ -507,8 +440,8 @@ re:
 
 - The `info` function is used here to **print a custom message** about what has
   just been built.
-  
-  >*We prefer `info` to shell `echo` because it is a make function.  Also unlike `echo` that can only be used inside a recipe, `info` can be used anywhere in a Makefile which makes it powerful for debugging.*
+
+  >*We prefer `info` to shell `echo` because it is a make function. Also unlike `echo` that can only be used inside a recipe, `info` can be used anywhere in a Makefile which makes it powerful for debugging.*
 
 - The **C compilation implicit rule is overwritten** with an explicit equivalent which let us add an `info` statement to it.
 
@@ -526,7 +459,7 @@ re:
 .SILENT:
 ```
 
-- Normally make prints each line of a rule's recipe before it is executed.  The special target **`.SILENT:` silences the rules output** specified as prerequisites, when it is used without prerequisites it silents all the rules (implicit included).
+- Normally make prints each line of a rule's recipe before it is executed. The special target **`.SILENT:` silences the rules output** specified as prerequisites, when it is used without prerequisites it silents all the rules (implicit included).
 
   >*To silence at the recipe-line level we can prefix the wanted recipe lines with an `@` symbol.*
 
@@ -536,9 +469,9 @@ re:
 
 [**Return to Index ↑**](#index)
 
-##  Version 3 - any kind of dir structure
+## Version 3 - any kind of dir structure
 
-###     v3 Structure
+### V3 Structure
 
 As above but a more complex project structure with **multiple source directories** and their **corresponding object directories**:
 
@@ -565,14 +498,14 @@ As above but a more complex project structure with **multiple source directories
                            └── icecream
 ```
 
-###     v3 Brief
+### V3 Brief
 
 - split the line with a `backslash`
 - substitution reference so `main.c` becomes `src/main.c`
 - generate the `OBJ_DIR` based on `SRC_DIR`
 - compilation rule uses multiple source and object directories
 
-###     v3 Template
+### V3 Template
 
 ```make
 ####################################### BEG_3 ####
@@ -608,7 +541,7 @@ CPPFLAGS    := -I include
 
 - We can **split the line** by ending it **with a `backslash`** to increase the readability of `SRCS` content and facilitate its modification.
 
-- A string **substitution reference** substitutes the value of each item of a variable with the specified alterations.  `$(SRCS:%=$(SRC_DIR)/%)` means that each item of `SRCS` represented by `%` becomes itself (`%`) plus the `$(SRC_DIR)/` alteration, so `main.c` becomes `src/main.c`. `OBJS` will then use the same process to convert `src/main.c` into `src/main.o`, dedicated to the `OBJ_DIR`.
+- A string **substitution reference** substitutes the value of each item of a variable with the specified alterations. `$(SRCS:%=$(SRC_DIR)/%)` means that each item of `SRCS` represented by `%` becomes itself (`%`) plus the `$(SRC_DIR)/` alteration, so `main.c` becomes `src/main.c`. `OBJS` will then use the same process to convert `src/main.c` into `src/main.o`, dedicated to the `OBJ_DIR`.
 
 ---
 
@@ -678,11 +611,11 @@ re:
 
 [**Return to Index ↑**](#index)
 
-##  Version 4 - static library
+## Version 4 - static library
 
-###     v4 Structure
+### V4 Structure
 
-Builds a **library** so there are no `main.c`.  We generate **dependencies** that are stored with the objects therefor we rename the `obj` directory into a more general `.build` directory.
+Builds a **library** so there are no `main.c`. We generate **dependencies** that are stored with the objects therefor we rename the `obj` directory into a more general `.build` directory.
 
 ```
     before build:          after build:
@@ -708,7 +641,7 @@ Builds a **library** so there are no `main.c`.  We generate **dependencies** tha
                            └── libicecream.a
 ```
 
-###     v4 Brief
+### V4 Brief
 
 - when a header file is modified the executable will rebuild
 - automatically generate a list of dependencies
@@ -717,7 +650,7 @@ Builds a **library** so there are no `main.c`.  We generate **dependencies** tha
 - hyphen symbol to prevent make from complaining
 - creates a static library
 
-###     v4 Template
+### V4 Template
 
 ```make
 ####################################### BEG_4 ####
@@ -779,7 +712,7 @@ main.o: main.c              main.o: main.c icecream.h
 <sub><sub><hr></sub></sub>
 
 - A static library is not a binary but a collection of objects so we use `ar` to
-  **creates a static library** during the linking step of the build.  `-r` to
+  **creates a static library** during the linking step of the build. `-r` to
   replace the older objects with the new ones with `-c` to create the library if
   it does not exist and `-s` to write an index into the archive or update an
   existing one.
@@ -831,7 +764,7 @@ re:
 ```
 
 - **Dependency files** are written in the make language and **must be included**
-  into our Makefile to be read.  The `include` directive work the same as C
+  into our Makefile to be read. The `include` directive work the same as C
   `#include`, it tells make to suspend its current Makefile reading and read the
   included files before continuing. Make sure to include the dependencies after
   they are created → after the compilation rule that invoke `-MMD` via
@@ -857,12 +790,13 @@ re:
 
 [**Return to Index ↑**](#index)
 
-##  Version 5 - Use of libraries
+## Version 5 - Use of libraries
 
-###     v5 Structure
+### V5 Structure
 
 Builds an `icecream` **program that uses** `libbase` and `libarom`
-**libraries**.  Both libraries are v4 based.
+
+**libraries**. Both libraries are v4 based.
 
 ```
     before build:              after build:
@@ -905,7 +839,7 @@ Builds an `icecream` **program that uses** `libbase` and `libarom`
                                └── icecream
 ```
 
-###     v5 Brief
+### V5 Brief
 
 - system library linked by default
 - `addprefix` make function
@@ -916,7 +850,7 @@ Builds an `icecream` **program that uses** `libbase` and `libarom`
 - builds each of the required libraries
 - call rules recursively
 
-###     v5 Template
+### V5 Template
 
 ```make
 # @author   clemedon (Clément Vidon)
@@ -971,7 +905,7 @@ LDLIBS      := $(addprefix -l,$(LIBS))
 
 - We can notice that the `m` library from `LIBS` is not mentionned in
   `LIBS_TARGET` for the reason that `m` is a **system library** (`libm` for
-  mathematical functions found in `math.h`).  Unlike the `libc` which is linked
+  mathematical functions found in `math.h`). Unlike the `libc` which is linked
   by default (we don't need to provide `-lc` flag to our linker) the `libm` is
   not **linked by default**.
 
@@ -1057,14 +991,14 @@ re:
 ```
 
 - **Linking with a library** requires special attention to the order of the
-  linking flags.  In our case we need to make sure that `$(LDFLAGS)` and
+  linking flags. In our case we need to make sure that `$(LDFLAGS)` and
   `$(LDLIBS)` passes respectively before and after the `$(OBJS)` in the linking
   recipe.
 
 <sub><sub><hr></sub></sub>
 
 - `$(LIBS_TARGET)` rule **builds each of the required libraries** found in the
-  `INGREDIENTS` part.  It is a `$(NAME)` prerequisite for the same reason as
+  `INGREDIENTS` part. It is a `$(NAME)` prerequisite for the same reason as
   `$(OBJS)` because our *final goal* needs the libraries as well as the objects
   to be built.
 
@@ -1072,7 +1006,7 @@ re:
 
 - As both rules `clean` and `fclean` appear in the Makefile of all our
   `$(LIBS_TARGET)` we can **call** these **rules** for each of them
-  **recursively** using a shell `for` loop.  Here again we use the `dir`
+  **recursively** using a shell `for` loop. Here again we use the `dir`
   function to only keep the directory part of the library.
 
 ```make
@@ -1088,9 +1022,9 @@ re:
 
 [**Return to Index ↑**](#index)
 
-##  Bonus
+## Bonus
 
-###     Extra rules
+### Extra rules
 
 ```make
 .PHONY: run
@@ -1098,7 +1032,7 @@ run: re
     -./$(NAME)
 ```
 
-- `run` is a simple rule that **`make` and `run` the default goal**.  We start
+- `run` is a simple rule that **`make` and `run` the default goal**. We start
   the shell command with the `hyphen` symbol to prevent make from interrupting
   its execution if our program execution returns a non-zero value.
 
@@ -1157,4 +1091,4 @@ cvidon   42
 clemedon icloud
 ```
 
-<sub><i>Copyright 2022 Clément Vidon.  All Rights Reserved.</i></sub>
+<sub><i>Copyright 2022 Clément Vidon. All Rights Reserved.</i></sub>
