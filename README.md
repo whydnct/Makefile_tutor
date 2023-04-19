@@ -1,23 +1,4 @@
-<h1 align="center">
-    MAKEFILE TUTOR (GNU)
-</h1>
-
-<h3 align="center">
-    <a href="#summary">Summary</a>
-    <span> · </span>
-    <a href="#usage">Usage</a>
-    <span> · </span>
-    <a href="#glossary">Glossary</a>
-    <span> · </span>
-    <a href="#syntax">Syntax</a>
-    <span> · </span>
-    <a href="#index">Index</a>
-    <span> · </span>
-    <a href="#sources">Sources</a>
-    <span> · </span>
-    <a href="#contact">Contact</a>
-</h3>
-
+# Makefile tutor
 # Summary
 
 Initially intended to help 42 students to step up their Makefile skills through **a C destined documented template** that evolves gradually, **version by version**. With the aim of making them more digestible and even tasty 🍔
@@ -331,23 +312,27 @@ $(NAME): $(OBJS)                        2 ← 1
     $(CC) $(CFLAGS) -c -o $@ $<
 ```
 
-- **C build recap** `%.o` target requires the sources to be compiled into objects, the `-c` option tells the compiler to only compile without linking. The `-o` option is used to specify the objects name. Afterward the `$(NAME)` target requires the linking the objects into a binary file whose name is specified with the `-o` flag. 
+- **C build recap**
+	- `%.o` → sources to be compiled into objects,
+	- `-c`  → only compile without linking.
+	- `-o` → specify the objects name.
 
-- For the `re` rule we have no choice but make an external call to our Makefile because we should not rely on the order in which prerequisites are specified. For example `re: fclean all` wouldn't not be reliable if **parallelization** was **enabled by `make --jobs`**.
+- For the `re` rule we have no choice but make an external call to our Makefile because we should not rely on the order in which prerequisites are specified.
+	- For example `re: fclean all` wouldn't be reliable if **parallelization** was **enabled by `make --jobs`**.
 
-- The prerequisites given to **the `.PHONY:` special target** become targets that make will run regardless of whether a file with that name exists. In short these prerequisites are our targets that don't bear the name of a file.
-
-Try to remove the `.PHONY: re`, create a file named `re` at the Makefile level  in the project directory and run `make re`. It won't work.  Now if you do the same with `all` it won't cause any problem, as we know  prerequisites are completed before their targets and `all` has the sole action  of invoking `$(NAME)`, as long as a rule doesn't have a recipe, `.PHONY` is not  necessary.
-
-[**Return to Index ↑**](#index)
+- `.PHONY:` special target
+	- special targets → make ejecuta las `recipes` de esa `rule` aunque haya un archivo con ese mismo nombre
+		- al contrario que en los demás casos
+	- Try to remove the `.PHONY: re`, create a file named `re` at the Makefile level  in the project directory and run `make re`. It won't work.
+		- si creas un archivo que se llame `all` no da problemas.
+			- no tiene `recipes`, sólo `prerequisites`.
+			- lo que make se salta son los `recipes`, la llamada a los `prerequisites` se sigue haciendo.
 
 ---
 
-## Version 2
+## Version 2 - con headers.h
 
 ### V2 Structure
-
-As above but for a project that **includes header files**:
 
 ```
     before build:     after build:
@@ -392,11 +377,11 @@ CFLAGS      := -Wall -Wextra -Werror
 CPPFLAGS    := -I .
 ```
 
-- `CPPFLAGS` is dedicated to **preprocessor's flags** like `-I <include_dir>`,
-  it allows you to no longer have to write the full path of a header but only
-  its file name in the sources: `#include "icecream.h"` instead of `#include
-  "../../path/to/include/icecream.h"`.
----
+- `CPPFLAGS`
+	- **preprocessor's flags** like `-I <include_dir>`,
+	- permite no tener que escribir el path completo del header.h en los sources si los header.h están en `include dir`
+		- `#include "icecream.h"` instead of `#include "../../path/to/include/icecream.h"`.
+
 ```make
 #------------------------------------------------#
 #   UTENSILS                                     #
@@ -438,17 +423,11 @@ re:
     $(MAKE) all
 ```
 
-- The `info` function is used here to **print a custom message** about what has
-  just been built.
+- `info` → **print a custom message**
+	- *We prefer `info` to shell `echo` because it is a make function.
+	- `echo` sólo puede ser usada en `recipes`, `info` en cualquier lado.
 
-  >*We prefer `info` to shell `echo` because it is a make function. Also unlike `echo` that can only be used inside a recipe, `info` can be used anywhere in a Makefile which makes it powerful for debugging.*
-
-- The **C compilation implicit rule is overwritten** with an explicit equivalent which let us add an `info` statement to it.
-
-- The order in which the rules are written does not matter as long as our
-  **default goal `all` appears first** (the rule that will be triggered by a
-  simple `make` command).
----
+- no importa el orden de las `rules`, siempre que la primera sea `all`, la que va a ser triggered por `make`
 
 ```make
 #------------------------------------------------#
@@ -459,9 +438,9 @@ re:
 .SILENT:
 ```
 
-- Normally make prints each line of a rule's recipe before it is executed. The special target **`.SILENT:` silences the rules output** specified as prerequisites, when it is used without prerequisites it silents all the rules (implicit included).
-
-  >*To silence at the recipe-line level we can prefix the wanted recipe lines with an `@` symbol.*
+- .SILENT → silenciar impresión de los `recipe` de cada `rule` especificada como `prerequisite`
+	- `prerequisite` vacío → todas las `rules`
+	- *To silence at the recipe-line level we can prefix the wanted recipe lines with an `@` symbol.*
 
 ```make
 ####################################### END_2 ####
@@ -472,8 +451,6 @@ re:
 ## Version 3 - any kind of dir structure
 
 ### V3 Structure
-
-As above but a more complex project structure with **multiple source directories** and their **corresponding object directories**:
 
 ```
     before build:          after build:
@@ -541,9 +518,11 @@ CPPFLAGS    := -I include
 
 - We can **split the line** by ending it **with a `backslash`** to increase the readability of `SRCS` content and facilitate its modification.
 
-- A string **substitution reference** substitutes the value of each item of a variable with the specified alterations. `$(SRCS:%=$(SRC_DIR)/%)` means that each item of `SRCS` represented by `%` becomes itself (`%`) plus the `$(SRC_DIR)/` alteration, so `main.c` becomes `src/main.c`. `OBJS` will then use the same process to convert `src/main.c` into `src/main.o`, dedicated to the `OBJ_DIR`.
+- **substitution reference** `$(SRCS:%=$(SRC_DIR)/%)`
+	- cada item de `SRCS` representado por `%` → `%` más `$(SRC_DIR)/`
+		- `main.c` →`src/main.c`.
+	- `OBJS` hace lo mismo para convertir `src/main.c` en `src/main.o`, dedicated to the `OBJ_DIR`.
 
----
 
 ```make
 #------------------------------------------------#
@@ -558,10 +537,10 @@ MAKEFLAGS   += --no-print-directory
 DIR_DUP     = mkdir -p $(@D)
 ```
 
-- `DIR_DUP` will **generate the `OBJ_DIR` based on `SRC_DIR`** structure
-- with `mkdir -p` which creates the directory and the parents directories if missing, and `$(@D)` that we have seen in [syntax](#syntax) section.
-	- This will work with every possible kind of src directory structure.
----
+- `DIR_DUP` **generate the `OBJ_DIR` based on `SRC_DIR`** structure
+	- `mkdir -p`  crea un directorio y sus padres
+	- el directorio será el del target, `$(@D)` de la `rule` en la que se ejecute la `recipe` que llame a `DIR_DUP`.
+
 ```make
 #------------------------------------------------#
 #   RECIPES                                      #
@@ -615,7 +594,8 @@ re:
 
 ### V4 Structure
 
-Builds a **library** so there are no `main.c`. We generate **dependencies** that are stored with the objects therefor we rename the `obj` directory into a more general `.build` directory.
+Builds a **library** →no hay `main.c`.
+generamos **dependencies**, que se guardan con los objects, así que renombramos el directorio de `obj` a uno más genérico, `build`.
 
 ```
     before build:          after build:
@@ -689,33 +669,18 @@ AR          := ar
 ARFLAGS     := -r -c -s
 ```
 
-- Unlike with sources, make doesn't notice **when a header file is modified** → won't consider **the executable** to be out of date → **will** not **rebuild** it.
-	- to change this → add the header files as additional prerequisites:
+- make controla los timestamp de los  `.c`, pero no los `.h` → **when a header file is modified** make won't consider **the executable** to be out of date → **will** not **rebuild** it.
+	- to change this → add the header files as additional prerequisites en la compilación.
+		- Doing this manually for multiple sources and headers is both tedious and error prone.
+		- `-MMD` in `CPPFLAGS` → the compiler will **automatically generate a list of dependencies** for each object file encountered during the compilation. → no hace falta incluir los `.h` como `prerequisite`.
+			- `-MP` → prevents errors that are triggered if a header file has been deleted or renamed.
+  - Dependency files must be included into our Makefile right after the objects creation → to obtain their names we copy `OBJS` into `DEPS` and use *substitution reference* to turn `.o` into `.d`.
 
-```make
-#before                     #after
-main.o: main.c              main.o: main.c icecream.h
-    clang -c $< -o $@           clang -c $< -o $@
-```
-
-- Doing this manually for multiple sources and headers is both tedious and error prone.
-	- `-MMD` in `CPPFLAGS` → the compiler will **automatically generate a list of dependencies** for each object file encountered during the compilation.
-	- The `-MP` option prevents errors that are triggered if a header file has been deleted or renamed.
-
-  Dependency files must be included into our Makefile right after the objects creation → to obtain their names we copy `OBJS` into `DEPS` and use *substitution reference* to turn `.o` part of their name into `.d`.
-
-<sub><sub><hr></sub></sub>
-
-- We change our old `OBJ_DIR = obj` for a `BUILD_DIR = .build`, a hidden **build
-  directory** that will contain our dependency files in addition to our objects.
-
-<sub><sub><hr></sub></sub>
-
-- A static library is not a binary but a collection of objects so we use `ar` to
-  **creates a static library** during the linking step of the build. `-r` to
-  replace the older objects with the new ones with `-c` to create the library if
-  it does not exist and `-s` to write an index into the archive or update an
-  existing one.
+- Una librería estática no es un binario, sino una colección de objetos.
+	- `ar` → **creates a static library** during the linking step of the build.
+	- `-r` to replace the older objects with the new ones with
+	- `-c` to create the library if it does not exist and
+	- `-s` to write an index into the archive or update an existing one.
 
 ```make
 #------------------------------------------------#
@@ -763,19 +728,9 @@ re:
     $(MAKE) all
 ```
 
-- **Dependency files** are written in the make language and **must be included**
-  into our Makefile to be read. The `include` directive work the same as C
-  `#include`, it tells make to suspend its current Makefile reading and read the
-  included files before continuing. Make sure to include the dependencies after
-  they are created → after the compilation rule that invoke `-MMD` via
-  `$(CPPFLAGS)`.
-
-<sub><sub><hr></sub></sub>
-
-- The purpose of the `-include $(DEPS)` initial **hyphen symbol** is **to
-  prevent make from complaining** when a non-zero status code is encountered,
-  which can be caused here by a missing files from our generated dependency
-  files list.
+- **Dependency files** `DEPS`are written in the make language and **must be included** into our Makefile to be read. The `include` directive work the same as C `#include`, it tells make to suspend its current Makefile reading and read the included files before continuing.
+	- include the dependencies after they are created → after the compilation rule that invoke `-MMD` via `$(CPPFLAGS)`.
+	- el `-` inicial de `-include $(DEPS)` →  **to prevent make from complaining** when a non-zero status code is encountered, which can be caused here by a missing file from our generated dependency files list.
 
 ```make
 #------------------------------------------------#
@@ -794,9 +749,7 @@ re:
 
 ### V5 Structure
 
-Builds an `icecream` **program that uses** `libbase` and `libarom`
-
-**libraries**. Both libraries are v4 based.
+Builds an `icecream` **program that uses** `libbase` and `libarom` **libraries**. Both libraries are v4 based.
 
 ```
     before build:              after build:
@@ -903,35 +856,17 @@ LDFLAGS     := $(addprefix -L,$(dir $(LIBS_TARGET)))
 LDLIBS      := $(addprefix -l,$(LIBS))
 ```
 
-- We can notice that the `m` library from `LIBS` is not mentionned in
-  `LIBS_TARGET` for the reason that `m` is a **system library** (`libm` for
-  mathematical functions found in `math.h`). Unlike the `libc` which is linked
-  by default (we don't need to provide `-lc` flag to our linker) the `libm` is
-  not **linked by default**.
+-  `m` de `LIBS` no está en  `LIBS_TARGET` porque `m` is a **system library** (`libm` for mathematical functions found in `math.h`).
+	- `libm` no se linka por defecto, al contrario que `libc` (we don't need to provide `-lc` flag to our linker)
+		- hay que incluirla en librerías a linkar pero no hace falta especificar el path.
 
-<sub><sub><hr></sub></sub>
+- `CPPFLAGS` we use **`addprefix`** that, as its name suggests is a **make function** that allows you to add a prefix, here a `-I` to each of the item found in `$(INCS)` (that contains the paths to our project and libraries headers).
 
-- In `CPPFLAGS` we use **`addprefix`** that, as its name suggests is a **make
-  function** that allows you to add a prefix, here a `-I` to each of the item
-  found in `$(INCS)` (that contains the paths to our project and libraries
-  headers).
+- `LDFLAGS` and `LDLIBS` contain the **flags and libraries** that will be **used by the linker** `ld` to link the library to our project sources.
 
-<sub><sub><hr></sub></sub>
+- The **`dir` function** means that we want to keep only directory part of the given item, there exists a `notdir` function that does the opposite to keep only the file name of the given item.
 
-- `LDFLAGS` and `LDLIBS` contain the **flags and libraries** that will be **used
-  by the linker** `ld` to link the library to our project sources.
-
-<sub><sub><hr></sub></sub>
-
-- The **`dir` function** means that we want to keep only directory part of the
-  given item, there exists a `notdir` function that does the opposite to keep
-  only the file name of the given item.
-
-<sub><sub><hr></sub></sub>
-
-- **Build with a library** requires three flags: `-I` tell the compiler where to
-  find the lib header files, `-L` tells the linker where to look for the library
-  and `-l` the name of this library (without its conventional `lib` prefix).
+- **Build with a library** requires three flags: `-I` tell the compiler where to find the lib header files, `-L` tells the linker where to look for the library and `-l` the name of this library (without its conventional `lib` prefix).
 
 For example: `-I lib/libarom/include -L lib/libarom -l arom`
 
@@ -990,24 +925,11 @@ re:
     $(MAKE) all
 ```
 
-- **Linking with a library** requires special attention to the order of the
-  linking flags. In our case we need to make sure that `$(LDFLAGS)` and
-  `$(LDLIBS)` passes respectively before and after the `$(OBJS)` in the linking
-  recipe.
+- **Linking with a library** requires special attention to the order of the linking flags. In our case we need to make sure that `$(LDFLAGS)` and `$(LDLIBS)` passes respectively before and after the `$(OBJS)` in the linking recipe.
 
-<sub><sub><hr></sub></sub>
+- `$(LIBS_TARGET)` rule **builds each of the required libraries** found in the `INGREDIENTS` part. It is a `$(NAME)` prerequisite for the same reason as `$(OBJS)` because our *final goal* needs the libraries as well as the objects to be built.
 
-- `$(LIBS_TARGET)` rule **builds each of the required libraries** found in the
-  `INGREDIENTS` part. It is a `$(NAME)` prerequisite for the same reason as
-  `$(OBJS)` because our *final goal* needs the libraries as well as the objects
-  to be built.
-
-<sub><sub><hr></sub></sub>
-
-- As both rules `clean` and `fclean` appear in the Makefile of all our
-  `$(LIBS_TARGET)` we can **call** these **rules** for each of them
-  **recursively** using a shell `for` loop. Here again we use the `dir`
-  function to only keep the directory part of the library.
+- As both rules `clean` and `fclean` appear in the Makefile of all our `$(LIBS_TARGET)` we can **call** these **rules** for each of them **recursively** using a shell `for` loop. Here again we use the `dir` function to only keep the directory part of the library.
 
 ```make
 #------------------------------------------------#
@@ -1032,29 +954,21 @@ run: re
     -./$(NAME)
 ```
 
-- `run` is a simple rule that **`make` and `run` the default goal**. We start
-  the shell command with the `hyphen` symbol to prevent make from interrupting
-  its execution if our program execution returns a non-zero value.
+- `run` is a simple rule that **`make` and `run` the default goal**. We start the shell command with the `hyphen` symbol to prevent make from interrupting its execution if our program execution returns a non-zero value.
 
 ```make
 info-%:
     $(MAKE) --dry-run --always-make $* | grep -v "info"
 ```
 
-- `info-<target>` rule will execute a `make <target>` command with `--dry-run` to
-  **print** the **`<target>` recipe without executing it**, `--always-make` to
-  `make` even if the targets already exist and `grep -v` to filter the output.
-  `$*` expands to the value given in place of the `%` at the rule call. For
-  example with `make info-re` `$*` will expand to `re`.
+- `info-<target>` rule will execute a `make <target>` command with `--dry-run` to **print** the **`<target>` recipe without executing it**, `--always-make` to `make` even if the targets already exist and `grep -v` to filter the output. `$*` expands to the value given in place of the `%` at the rule call. For example with `make info-re` `$*` will expand to `re`.
 
 ```make
 print-%:
     $(info '$*'='$($*)')
 ```
 
-- The `print-<variable>` that works like `print-<rule>` will **print the value
-  of an arbitrary variable**, for example a `make print-CC` will output
-  `CC=clang`.
+- The `print-<variable>` that works like `print-<rule>` will **print the value of an arbitrary variable**, for example a `make print-CC` will output `CC=clang`.
 
 ```make
 .PHONY: update
@@ -1065,9 +979,7 @@ update:
     git stash pop
 ```
 
-- The `update` rule will **update the git repository** to its last version, as
-  well as its *git submodules*. `stash` commands saves eventual uncommitted
-  changes and put them back in place once the update is done.
+- The `update` rule will **update the git repository** to its last version, as well as its *git submodules*. `stash` commands saves eventual uncommitted changes and put them back in place once the update is done.
 
 # Sources
 
