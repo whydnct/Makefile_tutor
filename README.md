@@ -594,7 +594,7 @@ re:
 
 ### V4 Structure
 
-Builds a **library** →no hay `main.c`.
+Construye una **library** →no hay `main.c`.
 generamos **dependencies**, que se guardan con los objects, así que renombramos el directorio de `obj` a uno más genérico, `build`.
 
 ```
@@ -728,7 +728,7 @@ re:
     $(MAKE) all
 ```
 
-- **Dependency files** `DEPS`are written in the make language and **must be included** into our Makefile to be read. The `include` directive work the same as C `#include`, it tells make to suspend its current Makefile reading and read the included files before continuing.
+- **Dependency files** `DEPS` are written in the make language and **must be included** into our Makefile to be read. The `include` directive work the same as C `#include`, it tells make to suspend its current Makefile reading and read the included files before continuing.
 	- include the dependencies after they are created → after the compilation rule that invoke `-MMD` via `$(CPPFLAGS)`.
 	- el `-` inicial de `-include $(DEPS)` →  **to prevent make from complaining** when a non-zero status code is encountered, which can be caused here by a missing file from our generated dependency files list.
 
@@ -860,15 +860,17 @@ LDLIBS      := $(addprefix -l,$(LIBS))
 	- `libm` no se linka por defecto, al contrario que `libc` (we don't need to provide `-lc` flag to our linker)
 		- hay que incluirla en librerías a linkar pero no hace falta especificar el path.
 
-- `CPPFLAGS` we use **`addprefix`** that, as its name suggests is a **make function** that allows you to add a prefix, here a `-I` to each of the item found in `$(INCS)` (that contains the paths to our project and libraries headers).
+- `CPPFLAGS`:
+	- **`addprefix`** → añadir `-I` a cada item de `$(INCS)` (los paths de los headers del proyecto y librerías)
 
-- `LDFLAGS` and `LDLIBS` contain the **flags and libraries** that will be **used by the linker** `ld` to link the library to our project sources.
-
-- The **`dir` function** means that we want to keep only directory part of the given item, there exists a `notdir` function that does the opposite to keep only the file name of the given item.
-
-- **Build with a library** requires three flags: `-I` tell the compiler where to find the lib header files, `-L` tells the linker where to look for the library and `-l` the name of this library (without its conventional `lib` prefix).
-
-For example: `-I lib/libarom/include -L lib/libarom -l arom`
+- `LDFLAGS` and `LDLIBS`: **flags and libraries** that will be **used by the linker** `ld` to link the library to our project sources.
+	- **Build with a library** necesita 3 flags:
+		- `-I` le dice al compilador dónde están los `.h`
+		- `-L` le dice al linker dónde están las `.a` librerías
+		- `-l` le dice al linker el nombre de las librerías sin el prefijo `lib`
+		- For example: `-I lib/libarom/include -L lib/libarom -l arom`
+	- **`dir` function**: a -L sólo hay que pasarle el los path de las librerías que , a -l los nombres.
+		- `notdir` hace lo contrario, se queda con el filename
 
 ```make
 
@@ -925,7 +927,7 @@ re:
     $(MAKE) all
 ```
 
-- **Linking with a library** requires special attention to the order of the linking flags. In our case we need to make sure that `$(LDFLAGS)` and `$(LDLIBS)` passes respectively before and after the `$(OBJS)` in the linking recipe.
+- **Linking with a library** requiere un orden concreto de las flags. `$(LDFLAGS)` `$(OBJS)` `$(LDLIBS)`.
 
 - `$(LIBS_TARGET)` rule **builds each of the required libraries** found in the `INGREDIENTS` part. It is a `$(NAME)` prerequisite for the same reason as `$(OBJS)` because our *final goal* needs the libraries as well as the objects to be built.
 
@@ -961,14 +963,20 @@ info-%:
     $(MAKE) --dry-run --always-make $* | grep -v "info"
 ```
 
-- `info-<target>` rule will execute a `make <target>` command with `--dry-run` to **print** the **`<target>` recipe without executing it**, `--always-make` to `make` even if the targets already exist and `grep -v` to filter the output. `$*` expands to the value given in place of the `%` at the rule call. For example with `make info-re` `$*` will expand to `re`.
+- `info-<target>` rule will execute a `make <target>` command with:
+	- `--dry-run` to **print** the **`<target>` recipe without executing it**,
+	- `--always-make` to `make` even if the targets already exist and
+	- `grep -v` to filter the output.
+	- `$*` expands to the value given in place of the `%` at the rule call.
+		- For example with `make info-re` `$*` will expand to `re`.
 
 ```make
 print-%:
     $(info '$*'='$($*)')
 ```
 
-- The `print-<variable>` that works like `print-<rule>` will **print the value of an arbitrary variable**, for example a `make print-CC` will output `CC=clang`.
+- The `print-<variable>` that works like `print-<rule>` will **print the value of an arbitrary variable**,
+	- for example a `make print-CC` will output `CC=clang`.
 
 ```make
 .PHONY: update
